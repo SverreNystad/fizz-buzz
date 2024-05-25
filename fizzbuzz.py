@@ -1,8 +1,3 @@
-# Fizzbuzz
-# num dividable by 3 write fizz
-# Num dividable by 5 write buzz
-# for both write fizzbuzz
-
 
 def get_production_rules() -> dict[int, str]:
     return {
