@@ -16,7 +16,7 @@ def get_production_rules() -> list[Rule]:
 
 
 def fizzbuzz(
-    amount: int, production_rules: dict[int, str] = get_production_rules()
+    amount: int, production_rules: list[Rule] = get_production_rules()
 ) -> list[str]:
     """
     Creates the words from fizzbuzz game.
@@ -25,7 +25,7 @@ def fizzbuzz(
 
     Args:
         amount: (int) the number of words to generate
-        production_rules: (dict[int, str], optional) the rules to produce the rules from.
+        production_rules: (list[Rule], optional) the rules to produce the rules from.
 
     Returns:
         the amount of words requested using the given production rules
