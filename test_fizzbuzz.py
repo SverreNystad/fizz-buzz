@@ -1,5 +1,5 @@
 import pytest
-from fizzbuzz import fizzbuzz
+from fizzbuzz import Rule, fizzbuzz
 
 
 @pytest.mark.parametrize(
@@ -33,14 +33,21 @@ from fizzbuzz import fizzbuzz
 )
 def test_simple_rule_set_for_multiple_cases(input, expected):
     """Parameterized test to check multiple cases at once."""
-    simple_rules = {3: "Fizz", 5: "Buzz"}
+    simple_rules = [
+        Rule(lambda x: x % 3 == 0, "Fizz"),
+        Rule(lambda x: x % 5 == 0, "Buzz"),
+    ]
     result = fizzbuzz(input, simple_rules)
     assert result == expected
 
 
 def test_complex_rule_set_for_multiple_cases():
     """Test with a more complex rule set."""
-    complex_rules = {2: "Foo", 3: "Bar", 5: "Baz"}
+    complex_rules = [
+        Rule(lambda x: x % 2 == 0, "Foo"),
+        Rule(lambda x: x % 3 == 0, "Bar"),
+        Rule(lambda x: x % 5 == 0, "Baz"),
+    ]
     result = fizzbuzz(15, complex_rules)
     expected = [
         "1",
@@ -64,7 +71,12 @@ def test_complex_rule_set_for_multiple_cases():
 
 def test_negative_rules():
     """Test with an edge case rule set."""
-    edge_case_rules = {-1: "Foo", -2: "Bar", -3: "Baz"}
+    edge_case_rules = [
+        Rule(lambda x: x % -1 == 0, "Foo"),
+        Rule(lambda x: x % -2 == 0, "Bar"),
+        Rule(lambda x: x % -3 == 0, "Baz"),
+    ]
+
     result = fizzbuzz(3, edge_case_rules)
     expected = ["Foo", "Foo Bar", "Foo Baz"]
     assert result == expected

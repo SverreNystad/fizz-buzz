@@ -1,9 +1,18 @@
+from dataclasses import dataclass
+from typing import Callable
 
-def get_production_rules() -> dict[int, str]:
-    return {
-        3: "Fizz",
-        5: "Buzz",
-    }
+
+@dataclass
+class Rule:
+    check: Callable[[int], bool]
+    result: str
+
+
+def get_production_rules() -> list[Rule]:
+    return [
+        Rule(lambda x: x % 3 == 0, "Fizz"),
+        Rule(lambda x: x % 5 == 0, "Buzz"),
+    ]
 
 
 def fizzbuzz(
@@ -22,7 +31,7 @@ def fizzbuzz(
         the amount of words requested using the given production rules
 
     Examples:
-        >>> rules = {3: "Fizz", 5: "Buzz"}
+        >>> rules = [Rule(lambda x: x % 3 == 0, "Fizz"), Rule(lambda x: x % 5 == 0, "Buzz")]
         >>> fizzbuzz(0, rules)
         []
         >>> fizzbuzz(3, rules)
@@ -33,9 +42,9 @@ def fizzbuzz(
     words = []
     for i in range(1, amount + 1):
         word = ""
-        for rule in production_rules.keys():
-            if i % rule == 0:
-                word += production_rules[rule] + " "
+        for rule in production_rules:
+            if rule.check(i):
+                word += rule.result + " "
         if word != "":
             words.append(word.strip())
         else:
@@ -45,5 +54,6 @@ def fizzbuzz(
 
 
 if __name__ == "__main__":
-
-    print(fizzbuzz(16))
+    rules = get_production_rules()
+    rules.append(Rule(lambda x: x == 15, "Bang"))
+    print(fizzbuzz(100, rules))
