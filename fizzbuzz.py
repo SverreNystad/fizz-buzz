@@ -16,7 +16,9 @@ def get_production_rules() -> list[Rule]:
 
 
 def fizzbuzz(
-    amount: int, production_rules: list[Rule] = get_production_rules(), separator: str = " "
+    amount: int,
+    production_rules: list[Rule] = get_production_rules(),
+    separator: str = " ",
 ) -> list[str]:
     """
     Creates the words from fizzbuzz game.

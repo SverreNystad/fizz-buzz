@@ -31,7 +31,7 @@ from fizzbuzz import Rule, fizzbuzz
         ),
     ],
 )
-def test_simple_rule_set_for_multiple_cases(input, expected):
+def test_simple_rule_set_for_multiple_cases(input: int, expected: list[str]) -> None:
     """Parameterized test to check multiple cases at once."""
     simple_rules = [
         Rule(lambda x: x % 3 == 0, "Fizz"),
@@ -41,7 +41,7 @@ def test_simple_rule_set_for_multiple_cases(input, expected):
     assert result == expected
 
 
-def test_complex_rule_set_for_multiple_cases():
+def test_complex_rule_set_for_multiple_cases() -> None:
     """Test with a more complex rule set."""
     complex_rules = [
         Rule(lambda x: x % 2 == 0, "Foo"),
@@ -69,7 +69,7 @@ def test_complex_rule_set_for_multiple_cases():
     assert result == expected
 
 
-def test_negative_rules():
+def test_negative_rules() -> None:
     """Test with an edge case rule set."""
     edge_case_rules = [
         Rule(lambda x: x % -1 == 0, "Foo"),
@@ -81,9 +81,9 @@ def test_negative_rules():
     expected = ["Foo", "Foo Bar", "Foo Baz"]
     assert result == expected
 
-def test_change_separator():
+
+def test_change_separator() -> None:
     expected_result = ["FizzBuzz"]
     rules = [Rule(lambda x: x % 1 == 0, "Fizz"), Rule(lambda x: x % 1 == 0, "Buzz")]
     result = fizzbuzz(1, rules, separator="")
     assert result == expected_result
-    
