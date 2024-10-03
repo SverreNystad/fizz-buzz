@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Get a list of all staged Python files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.py$')
+
+# If no Python files are staged, skip the hook
+if [[ -z "$STAGED_FILES" ]]; then
+  echo "No Python files staged for commit."
+  exit 0
+fi
+
+# Run flake8 on staged Python files
+echo "Running flake8 on staged files..."
+for file in $STAGED_FILES; do
+  flake8 $file
+done
+FL8=$?
+
+# Run mypy on staged Python files
+echo "Running mypy on staged files..."
+mypy $STAGED_FILES
+MYPY=$?
+
+
+echo "Running black on staged files..."
+black --check $STAGED_FILES
+BLACK=$?
+
+# If any linter fails, prevent the commit
+if [ $FL8 -ne 0 ] || [ $MYPY -ne 0 ]; then
+  echo "Pre-commit checks failed. Fix the errors and try again."
+  exit 1
+fi
+
+echo "Pre-commit checks passed."
+exit 0
