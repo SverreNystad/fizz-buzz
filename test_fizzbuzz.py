@@ -80,3 +80,10 @@ def test_negative_rules():
     result = fizzbuzz(3, edge_case_rules)
     expected = ["Foo", "Foo Bar", "Foo Baz"]
     assert result == expected
+
+def test_change_separator():
+    expected_result = ["FizzBuzz"]
+    rules = [Rule(lambda x: x % 1 == 0, "Fizz"), Rule(lambda x: x % 1 == 0, "Buzz")]
+    result = fizzbuzz(1, rules, separator="")
+    assert result == expected_result
+    
