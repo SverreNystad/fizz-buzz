@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: CI
 
 on:
   push:
@@ -30,3 +30,18 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+
+  dependabot:
+    name: 'Dependabot'
+    # After the E2E and build jobs, if one of them fails, it won't merge the PR.
+    needs: [build] 
+    runs-on: ubuntu-latest
+    # Detect that the PR author is dependabot
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}} 
+    steps:
+      - name: Enable auto-merge for Dependabot PRs
+        # Use Github CLI to merge automatically the PR
+        run: gh pr merge --auto --merge "$PR_URL" 
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
